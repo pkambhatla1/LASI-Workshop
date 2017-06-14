@@ -1,6 +1,10 @@
 rm(list=ls(all=TRUE))
 library(igraph)
 
+igraph.options(print.vertex.attributes = TRUE)
+igraph.options(print.edge.attributes = TRUE)
+
+
 rawPosts <- read.csv("mdl_forum_posts_scrubbed.csv")
 
 # SQL That moves Raw posts to a network structure
@@ -16,7 +20,19 @@ rawPosts <- read.csv("mdl_forum_posts_scrubbed.csv")
 # created - timestamp of creation
 # modified - timestamp of any modification 
 
+## Read the network posts into a variable
+networkPosts <- read.csv("mdl_forum_posts_scrubbed_snadata.csv")
 
+## Create an iGraph dataframe frome the regular dataframe
+myGraph <- 	graph.data.frame(networkPosts, directed=TRUE)
 
-networkPosts <- read.csv("mdl_forum_posts_scrubbed_sna_data.csv")
+## Set the labels. 
+## This does not work, need to create a factor so 
+## Numbers show up as strings
+V(myGraph)$label <- V(myGraph)$userid_to
+
+## Plot the iGraph
+plot.igraph(myGraph, vertex.label.dist=.6, vertex.label.cex=1, vertex.label.color="blue", 
+            vertex.frame.color="white") 
+
 
