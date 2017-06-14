@@ -23,8 +23,11 @@ rawPosts <- read.csv("mdl_forum_posts_scrubbed.csv")
 ## Read the network posts into a variable
 networkPosts <- read.csv("mdl_forum_posts_scrubbed_snadata.csv")
 
+## Create a smaller sample of one user's connections 
+test <- subset(networkPosts, userid_to == 178920)
+
 ## Create an iGraph dataframe frome the regular dataframe
-myGraph <- 	graph.data.frame(networkPosts, directed=TRUE)
+myGraph <- 	graph.data.frame(test, directed=TRUE)
 
 ## Set the labels. 
 ## This does not work, need to create a factor so 
